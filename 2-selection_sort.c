@@ -1,55 +1,34 @@
 #include "sort.h"
-
 #include <stdio.h>
 
-void swap(int *array, size_t pos1, size_t pos2);
 
 /**
- * selection_sort - performs selection sort on an array
- * @array: array to sort (of ints)
- * @size: size of array (as size_t)
+ * selection_sort - sorts an array of integers in ascending order
+ * @array: The array
+ * @size: The size of the array
+ *
+ * Return: void
  */
 void selection_sort(int *array, size_t size)
 {
-	size_t unsorted_i = 0, ele_pos = 0, sorted_i = 0;
+	size_t i, step, min_idx;
+	int tmp;
 
-	if (!array || size <= 1)
-		return;
-	while (sorted_i < size)
+	for (step = 0; step < size - 1; step++)
 	{
-		unsorted_i = sorted_i;
-		ele_pos = sorted_i;
-		/* grabs the ele_pos of min ele */
-		while (unsorted_i < size)
+		min_idx = step;
+		for (i = step + 1; i < size; i++)
 		{
-			if (array[unsorted_i] < array[ele_pos])
-			{
-				ele_pos = unsorted_i;
-				if (unsorted_i + 1 == size)
-					break;
-			}
-			unsorted_i++;
+			if (array[i] < array[min_idx])
+				min_idx = i;
 		}
-		if (array[ele_pos] < array[sorted_i])
+
+		if (min_idx != step)
 		{
-			swap(array, sorted_i, ele_pos);
+			tmp = array[step];
+			array[step] = array[min_idx];
+			array[min_idx] = tmp;
 			print_array(array, size);
 		}
-		sorted_i++;
 	}
-}
-
-/**
- * swap - swaps two array elements position
- * @array: array to swap in
- * @pos1: position of element 1 to swap with element 2
- * @pos2: position of element 2 to swap with element 1
- */
-void swap(int *array, size_t pos1, size_t pos2)
-{
-	int temp;
-
-	temp = array[pos2];
-	array[pos2] = array[pos1];
-	array[pos1] = temp;
 }
